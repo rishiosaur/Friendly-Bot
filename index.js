@@ -6,11 +6,20 @@ const bot = new SlackBot({
   name: "a friend."
 });
 
-bot.on("start", () => {
-  const params = {
-    icon_emoji: ":robot_face:"
-  };
-});
+bot.on("message", message => {
+    if(message.subtype !== "channel_join") {
+        return;
+    }
+
+    console.log(message)
+    if(message.user == "US2RDLTML"){
+        let params = {
+            icon_emoji: ":wave:"
+          };
+  
+         bot.postMessage(message.channel, `Hi everyone, I'm a friendly bot built by <@UHFEGV147>! Just mention me in a message if you need anything :)`, params);
+    }
+})
 
 bot.on("error", err => {
   console.log(err);
@@ -41,7 +50,7 @@ function handleMessage(message) {
       },
 
     "hello": {
-      aliases: ["hey", "greetings"],
+      aliases: ["hey", "greetings", "hi", "'sup", "wassup"],
       func: (channel, message) => {
 
         let params = {
@@ -93,19 +102,18 @@ function handleMessage(message) {
 
   let checkSaying = Object.keys(possibleSayings).some((saying, index) => {
     let prototypeCheck = false;
-    let messageIncludes = message.text.includes(saying);
+    let messageTextToCheck = message.text.toLowerCase();
+    let messageIncludes = messageTextToCheck.includes(saying);
     if (messageIncludes) {
       nameOfSaying = saying;
     }
     prototypeCheck = messageIncludes;
 
     if (!messageIncludes && saying.aliases) {
-        console.log(possibleSayings)
-      //AliasCheck: find
       let protAliasCheck = possibleSayings[saying].aliases.some(alias => {
           
-        aliasCheck = message.text.includes(alias);
-        if (message.text.includes(alias)) {
+        aliasCheck = messageTextToCheck.includes(alias);
+        if (aliasCheck) {
           nameOfSaying = saying;
         }
         return aliasCheck;
