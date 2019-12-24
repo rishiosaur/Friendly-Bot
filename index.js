@@ -45,7 +45,7 @@ bot.on("message", message => {
 
 function handleMessage(message) {
   let possibleSayings = {
-    joke: {
+    "joke": {
       aliases: ["random joke"],
       func: channel => {
         const params = {
@@ -55,7 +55,7 @@ function handleMessage(message) {
       }
     },
 
-    hello: {
+    "hello": {
       aliases: ["hey", "greetings", "hi", "'sup", "wassup"],
       func: (channel, message) => {
         let params = {
@@ -65,7 +65,7 @@ function handleMessage(message) {
         bot.postMessage(channel, `Hey there, <@${message.user}>!`, params);
       }
     },
-    gp: {
+    "gp": {
       aliases: ["gp"],
       func: (channel, message) => {
         let params = {
@@ -114,16 +114,17 @@ function handleMessage(message) {
     }
     prototypeCheck = messageIncludes;
 
-    if (!messageIncludes && saying.aliases) {
+    // if (saying.aliases != undefined) {
       let protAliasCheck = possibleSayings[saying].aliases.some(alias => {
         aliasCheck = messageTextToCheck.includes(alias);
+        console.log(aliasCheck)
         if (aliasCheck) {
           nameOfSaying = saying;
         }
         return aliasCheck;
       });
       prototypeCheck = protAliasCheck;
-    }
+    // }
 
     return prototypeCheck;
   });
