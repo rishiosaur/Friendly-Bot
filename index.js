@@ -19,7 +19,7 @@ bot.on("message", message => {
 
     bot.postMessage(
       message.channel,
-      `Hi everyone, I'm a friendly bot built by <@UHFEGV147>! Just mention me in a message if you need anything :)`,
+      `Hi everyone, I'm a friendly bot built by <@UHFEGV147> to provide support! Just mention me in a message if you need anything :)`,
       params
     );
   }
